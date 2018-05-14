@@ -1,0 +1,184 @@
+---
+title: "RSAT 20 years workshop: training session"
+subtitle: "Motif analysis in Plant ChIP-seq peaks"
+author: "Jacques van Helden"
+date: '`r Sys.Date()`'
+output:
+  html_document:
+    code_folding: hide
+    fig_caption: yes
+    highlight: zenburn
+    theme: cerulean
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+  slidy_presentation:
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    highlight: tango
+    incremental: yes
+    keep_md: yes
+    smaller: yes
+    theme: cerulean
+    toc: yes
+    widescreen: yes
+  ioslides_presentation:
+    colortheme: dolphin
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    fonttheme: structurebold
+    highlight: tango
+    smaller: yes
+    toc: yes
+    widescreen: yes
+  pdf_document:
+    fig_caption: yes
+    highlight: zenburn
+    toc: yes
+    toc_depth: 3
+  beamer_presentation:
+    colortheme: dolphin
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    fonttheme: structurebold
+    highlight: tango
+    incremental: no
+    keep_tex: no
+    slide_level: 2
+    theme: Montpellier
+    toc: yes
+font-import: http://fonts.googleapis.com/css?family=Risque
+font-family: Garamond
+transition: linear
+bibliography: bibliography.bib
+biblio-style: "apalike"
+link-citations: yes
+---
+
+```{r include=FALSE, echo=FALSE, eval=TRUE}
+library(knitr)
+options(width=300)
+knitr::opts_chunk$set(
+  fig.width = 7, fig.height = 5, 
+  fig.path='figures',
+  fig.align = "center", 
+  size = "tiny", 
+  echo = TRUE, eval=TRUE, 
+  warning = FALSE, message = FALSE, 
+  results = TRUE, comment = "")
+# knitr::asis_output("\\footnotesize")
+
+```
+
+
+## Introduction
+
+In 2018, the Regulatory Sequence Analysis Tools (RSAT) software suite celebrates its $20^{th}$ birthday by organising a 1-day workshop. 
+
+This page contains a 3-hours tutorial to get familiar with RSAT based on a study case where we analyse motifs in plant ChIP-seq peaks. The concepts seen here apply to other organisms as well. 
+
+This tutorial is derived from a previously published protocol [@pmid27557775].
+
+*Castro-Mondragon, J.A. et al. (2016). Methods Mol Biol., 1482, 297–322
+
+## Tutorial
+
+### Hightroughput determination of regulatory regions
+Currently, regulatory regions and transcription factor binding sites can be experimentally determined in a high-throughput manner by using ChIP-seq.
+
+ChIP-seq consists in the immunoprecipitation of a protein bound to the DNA (Histone with a specific modification or a transcription factor), followed by the sequencing of this DNA.
+
+The pulled down sequences are latter on aligned to the genome, and through different bioinformatic approaches the enriched regions (peaks) are detected. In brief, peaks are detected as regions where there is a high probability of the protein being bound given the amount of aligned read compared between the experiment and a given control.
+
+![Figure1: From Castro-Mondragon, et al 2016, genome browser screen shot in chromosome 1 of the *Arabidopsis thaliana* genome. Superiour tracks show the reads from a ChIP-seq experiment for MYB3R3 transcription factor and it's control. The bottom panel shows peaks retrieved using different bioinformatic methods with variable parammeters. ](figures/Figure1.png "Figure1")
+
+### Regulatory Sequence Analysis Tools
+Since 1998, van Helden and collaborators develop tools to enable users to perform an assortment of analysis to retrieve relevant information from determined regulatory elements in genomes [RSA-Tools](https://www.rsat.eu). While it started as a one organism (yeast) server, soon it incorporated other genomes. In 2015, due to the increasing amount of sequenced genomes these were separated on dedicated servers to enable a better management of the data by taxon. 
+
+For the current protocol we will be using, preferentially, the [RSAT::Plants server](http://plants.rsat.eu/), that has the *Arabidopsis thaliana* TAIR10.37 genome installed.
+
+###Materials
+#### Tools
+1. *sequences from bedbed/gff/vcf*: Retrieves sequences from a genome given a set of coordinates 
+2. *peak-motifs*: discover enriched motifs from a set of sequences. 
+3.  *matrix-clustering*: identify similarities across a collection of motifs.
+
+#### Data
+*MYB3R3 ChIP-Seq peaks were downloaded from GEO NCBI [ftp](ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1482nnn/GSM1482283/suppl/GSM1482283_MYB3R3-GFP_ChIP_peaks.bed.txt.gz)
+
+###Protocol
+####1) Retreive ChIP-seq peaks sequences from the TAIR10.37 genome
+
+1. In the [RSAT::Plants server](http://plants.rsat.eu/) server, go to the tool *sequences from bed/gff/vcf*.
+
+2. Input the name of the organism of interest, in this case *Arabidopsis thaliana* TAIR10.37, the tool will give complete options for the organism name.
+
+3. Upload the downloaded bed file, or paste the link to it. The email output option will send the result to your inbox once is done.
+
+4. The output will be a fasta file with the sequences from the peaks, save this file or the link to it for following steps.
+
+![Figure2: Screenshot of the  *sequences from bed/gff/vcf* form. The user has to input the required data and information. Optionally, the second **DEMO** will authomatically fill in the data](figures/Figure2.png "Figure2")
+
+
+####2) Discover over-represented motifs in the set of peak sequences
+
+1.In any [RSAT server](http://plants.rsat.eu/) server, go to the tool *peak-motifs*.
+2.Input the sequence set obtained as output in our previous step. 
+3.Input an appropriate tittle for the analysis, for example: **A. Thaliana MYB3R3 vs GFP - GSM1482283**
+4.Explore the options!
+5.The discovered motifs can be compared to a knonw motif database, in this case we will select **footprintDB-plants**, users can input their personal collections in transfac format.
+6.Under **Locate motifs and export predicted sites as custom UCSC tracks**, in **Visualiza peaks ans sites in genome browser**, select peak coordiantes specified in fasta headers in *bedtools getfasta* format, asumming we used the *sequences from bed/gff/vcf* to retrieve the sequences.
+
+![Figure3: Screenshot of the  *peak-motifs* form. The user has to input the required data and information.](figures/Figure3.png "Figure3")
+
+7.A link to the results will appear. Anticipated results can be found [here](./peak-motifs.2018-05-11.190016_2018-05-11.190016_zkwbfV/peak-motifs_synthesis.html).
+
+8. *peak-motifs* results include:
+
+  1. **Results summary**: The set of discovered motifs and the full results can be downloaded.
+
+  2. **Sequence composition**: Shows the nucleotidic composition of the peaks.
+    Is possible to observed the size distribution of the peaks (mean of 200bps). Two transition tables are show, one for mono-nculeotide compistion and a second one for di-nucleotide compostion. 
+    
+  3. **Discovered motifs by algorithm**:  The discovered motifs are organized by algorithm, and the motif name is built with the options used to retreive the motifs (k-mer length, markov model, rank of the motif). The motif logo is shown in both orientation and a motif comparison with the selected database is shown.
+  
+9. Note that the algorithms display similar motifs, hence the next step would be to reduce motif redundancy. 
+
+####3) Motif-Clustering
+
+RSAT provides the tool *matrix-clustering* to reduce redundancy in a motif collection. This splecially usefull when several motif-discovery algorithms have been used on a data set, and several highly similar motifs have been found, like is the case in the current protocol.
+
+1. Open the tool *matrix-clustering* in the [RSAT:Plant](http://plants.rsat.eu) server.
+![Figure4.1: Screenshot of the  *matrix-clustering* form. The user has to fill the mandatory sections.](figures/Figure4.1.png "Figure4.1")
+
+2. On the title box give a title to the analysis.
+
+3. Input the motif file containing the resuleting motifs from *peak-motifs*.
+![Figure4.2: Screenshot of the  *matrix-clustering* form. The user has to fill the mandatory sections.](figures/Figure4.2.png "Figure4.2")
+
+4. Options can be tuned to trim the tree comparing the motifs with different thresholds. For the current protocol we recomened using **w**=5 and **Ncor**=0.55.
+
+5. In advanced options, select *Ncor* (Normalized Pearson Correlation) and *average*
+![Figure4.3: Screenshot of the  *matrix-clustering* form. The user has to fill the mandatory sections.](figures/Figure4.3.png "Figure4.3")
+
+6. Select one output option. Since the program could take some time depending on the size of the collection we recomend using **email**.
+
+![Figure4.4: Screenshot of the  *matrix-clustering* form. The user has to fill the mandatory sections.](figures/Figure4.4.png "Figure4.4")
+
+7. A results summary show a table with the number of input motifs together with the used parameters and a link to download the results.
+
+8. The **Logo forest** shows a tree conecting the motifs by similarity. There are tow visualization formats, a dynamic browsable one and a low aulaity image allows for a quick overview.
+
+9. The **Individual motifs view** shows a table with the input motifs a general information on the,
+
+10. 
+
+9. 
+
+
+## References
+
+
