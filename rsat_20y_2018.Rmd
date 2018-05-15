@@ -1,5 +1,6 @@
-#RSAT 20 years workshop: training session"
-##"Motif analysis in Plant ChIP-seq peaks"
+
+# RSAT 20 years workshop: training session"
+## "Motif analysis in Plant ChIP-seq peaks"
 Authors: "Alejandra Medina-Rivera, Morgane Thomas-Chollier and Jacques van Helden"
 <!-- 
 ---
