@@ -146,11 +146,16 @@ For the current tutorial we will be using, preferentially, the [**RSAT::Plants**
 
 ### Discovering over-represented motifs in the set of peak sequences
 
-1.In any [RSAT server](http://plants.rsat.eu/) server, go to the tool *peak-motifs*.
-2.Input the sequence set obtained as output in our previous step. 
-3.Input an appropriate tittle for the analysis, for example: **A. Thaliana MYB3R3 vs GFP - GSM1482283**
-4.Explore the options!
-5.The discovered motifs can be compared to a knonw motif database, in this case we will select **footprintDB-plants**, users can input their personal collections in transfac format.
+1.In any [RSAT server](http://plants.rsat.eu/) server, find the tool *peak-motifs*.
+
+2. Type an appropriate **tittle** for the analysis, for example: *A. Thaliana MYB3R3 vs GFP - GSM1482283*.
+
+3. For the **Peak sequences** option set, paste the URL of the fasta sequence file obtained in the previous section (alternatively, you can upload the fasta file from your local copy but this will take more time-. 
+
+4. Explore the other options! We will discuss them during the training session. 
+
+5. Specify a transcription factor database that will be used to associate the discovered motifs putative bound factors. For this dataset we will select **footprintDB-plants**. Note that the tool also allows you to upload a custom motif collection in Transfac format.
+
 6.Under **Locate motifs and export predicted sites as custom UCSC tracks**, in **Visualiza peaks ans sites in genome browser**, select peak coordiantes specified in fasta headers in *bedtools getfasta* format, asumming we used the *sequences from bed/gff/vcf* to retrieve the sequences.
 
 ![Figure3: Screenshot of the  *peak-motifs* form. The user has to input the required data and information.](figures/Figure3.png "Figure3")
