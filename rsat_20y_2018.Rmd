@@ -1,7 +1,7 @@
 ---
 title: "RSAT 20 years workshop: training session"
 subtitle: "Motif analysis in Plant ChIP-seq peaks"
-author: "Jacques van Helden"
+author: "Alejandra Medina-Rivera, Morgane Thomas-Chollier and Jacques van Helden"
 date: '`r Sys.Date()`'
 output:
   html_document:
@@ -76,54 +76,75 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-In 2018, the Regulatory Sequence Analysis Tools (RSAT) software suite celebrates its $20^{th}$ birthday by organising a 1-day workshop. 
+In 2018, the Regulatory Sequence Analysis Tools (RSAT) software suite celebrates its $20^{th}$ birthday by organising a 1-day workshop in Paris (May 17-18, 2018). 
 
-This page contains a 3-hours tutorial to get familiar with RSAT based on a study case where we analyse motifs in plant ChIP-seq peaks. The concepts seen here apply to other organisms as well. 
+This page contains a 3-hours tutorial to get familiar with RSAT based on a study case where we analyse motifs in plant ChIP-seq peaks. This tutorial is derived from a previously published protocol [@pmid27557775]. The concepts seen here apply to other organisms as well. 
 
-This tutorial is derived from a previously published protocol [@pmid27557775].
 
-*Castro-Mondragon, J.A. et al. (2016). Methods Mol Biol., 1482, 297–322
+
+### High-troughput characterization of regulatory regions
+
+The ChIP-seq technology permits to determine experimentally all the DNA binding locations of a transcription factor, as well as diverse histone modifications related to epigenetic regulatioN. 
+
+ChIP-seq consists in the immunoprecipitation of a protein bound to the DNA (Histone with a specific modification or a transcription factor), followed by the sequencing of the immunoprecipitated DNA fragments. 
+
+The pulled down sequences are then on aligned to the genome (*read-mapping*), and the regions in reads (*peaks*) are detected with a *peak-calling* software tool. In brief, peaks are considered as regions where the protein of interest is likelt to be bound, given the local enrichment of aligned reads in ChIP-ped samples compared to a given control (so-called "*input*").
+
+![Figure1: From Castro-Mondragon, et al 2016, genome browser screen shot of a 9 kb region in chromosome 1 of the *Arabidopsis thaliana* genome. The top tracks show the read coverage profile from a ChIP-seq experiment for MYB3R3 transcription factor (brown) and its control (gray). The bottom panel shows peaks obtained using different bioinformatics tools (peak-callers) with variable parammeters (see [@pmidpmid27557775] for details).](figures/Figure1_mapped_reads.png "Figure1")
+
+### Regulatory Sequence Analysis Tools
+
+Since 1998, van Helden and collaborators developed a software suite combining specialised tools to analyse regulatory motifs in genomic sequences ([**RSAT**; http://www.rsat.eu/](http://www.rsat.eu/)). 
+
+Although initial project started with the first fully sequenced eukaryote, the bdding yease *Saccharomyces cerevisiae*, it soon incorporated other organisms, attempting to cope with the ever-increasing number of sequenced genomes. 
+
+In 2015, the Web access was distributed over 6 dedicated servers in order to enable a better management of genomic data, and to rationalise the presentation of some taxon-specific tools.  
+
+For the current tutorial we will be using, preferentially, the [**RSAT::Plants** server (http://plants.rsat.eu/)](http://plants.rsat.eu/), where the *Arabidopsis thaliana* genome is installed (we will use assembly TAIR10.37).
+
+## Materials
+
+### Tools
+
+1. *sequences from bedbed/gff/vcf*: Retrieves sequences from a genome given a set of coordinates 
+
+2. *peak-motifs*: discover exceptional motifs from a set of peak sequences, based on a combination of motif discovery algorithms relying on different criteria (enrichment, positional bias, local enrichment). 
+
+3.  *matrix-clustering*: identify similarities across a collection of motifs.
+
+### Study case
+
+*MYB3R3 ChIP-Seq peaks were downloaded from GEO NCBI [ftp site](ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1482nnn/GSM1482283/suppl/GSM1482283_MYB3R3-GFP_ChIP_peaks.bed.txt.gz)
 
 ## Tutorial
 
-### Hightroughput determination of regulatory regions
-Currently, regulatory regions and transcription factor binding sites can be experimentally determined in a high-throughput manner by using ChIP-seq.
+### Downloading peak coordinates
 
-ChIP-seq consists in the immunoprecipitation of a protein bound to the DNA (Histone with a specific modification or a transcription factor), followed by the sequencing of this DNA.
+1. Create a temporary folder on your computer to store the data and results of this tutorial. 
 
-The pulled down sequences are latter on aligned to the genome, and through different bioinformatic approaches the enriched regions (peaks) are detected. In brief, peaks are detected as regions where there is a high probability of the protein being bound given the amount of aligned read compared between the experiment and a given control.
+2. Download the [peak coordinates](ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1482nnn/GSM1482283/suppl/GSM1482283_MYB3R3-GFP_ChIP_peaks.bed.txt.gz) in this folder. 
 
-![Figure1: From Castro-Mondragon, et al 2016, genome browser screen shot in chromosome 1 of the *Arabidopsis thaliana* genome. Superiour tracks show the reads from a ChIP-seq experiment for MYB3R3 transcription factor and it's control. The bottom panel shows peaks retrieved using different bioinformatic methods with variable parammeters. ](figures/Figure1.png "Figure1")
-
-### Regulatory Sequence Analysis Tools
-Since 1998, van Helden and collaborators develop tools to enable users to perform an assortment of analysis to retrieve relevant information from determined regulatory elements in genomes [RSA-Tools](https://www.rsat.eu). While it started as a one organism (yeast) server, soon it incorporated other genomes. In 2015, due to the increasing amount of sequenced genomes these were separated on dedicated servers to enable a better management of the data by taxon. 
-
-For the current protocol we will be using, preferentially, the [RSAT::Plants server](http://plants.rsat.eu/), that has the *Arabidopsis thaliana* TAIR10.37 genome installed.
-
-###Materials
-#### Tools
-1. *sequences from bedbed/gff/vcf*: Retrieves sequences from a genome given a set of coordinates 
-2. *peak-motifs*: discover enriched motifs from a set of sequences. 
-3.  *matrix-clustering*: identify similarities across a collection of motifs.
-
-#### Data
-*MYB3R3 ChIP-Seq peaks were downloaded from GEO NCBI [ftp](ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1482nnn/GSM1482283/suppl/GSM1482283_MYB3R3-GFP_ChIP_peaks.bed.txt.gz)
-
-###Protocol
-####1) Retreive ChIP-seq peaks sequences from the TAIR10.37 genome
-
-1. In the [RSAT::Plants server](http://plants.rsat.eu/) server, go to the tool *sequences from bed/gff/vcf*.
-
-2. Input the name of the organism of interest, in this case *Arabidopsis thaliana* TAIR10.37, the tool will give complete options for the organism name.
-
-3. Upload the downloaded bed file, or paste the link to it. The email output option will send the result to your inbox once is done.
-
-4. The output will be a fasta file with the sequences from the peaks, save this file or the link to it for following steps.
-
-![Figure2: Screenshot of the  *sequences from bed/gff/vcf* form. The user has to input the required data and information. Optionally, the second **DEMO** will authomatically fill in the data](figures/Figure2.png "Figure2")
+3. Open the (uncompressed) bed file with a spreadsheet like Excel or Office calc and check its content. Information about the bed format can be found on the [UCSC Genome Browser](https://genome.ucsc.edu/FAQ/FAQformat.html#format1).  
 
 
-####2) Discover over-represented motifs in the set of peak sequences
+### Retrieving ChIP-seq peaks sequences from the TAIR10.37 genome
+
+1. Open in a separate window a connection to the the [RSAT::Plants server](http://plants.rsat.eu/) server. 
+
+2. In the left-sided menu, find the tool named *sequences from bed/gff/vcf* (you can either click on **view all tools**, or use the search box at the top of the tool pane.
+
+2. Start typing the name of the organism of interest, in this case *Arabidopsis*. While you do this, the Web form will provide the possible completions for the organism name. Select *Arabidopsis thaliana.TAIR10.37*. 
+
+3. To specify the **genomic coordinates** you can either **upload** a file from your computer (e.g. the file that you downloaded in the previous section), or directly paste the link (e.g. ftp site above) in the **URL** textbox. 
+
+4. Optionally, you can select email output in order to be notified of the query submission and completion (you shoud thus receive 2 separate emails for aach query). 
+
+5. After a few seconds, the server displays a link to the output file, which contains the fasta-formatted sequences of the peaks.  You can either download the fasta sequences to your computer, or save the URL, that will be used for following steps^[The second option is particularly interesting if you have a slow internet connection, since this avoids to download the sequences and upload them for further analysis].
+
+![Figure2: Screenshot of the  *sequences from bed/gff/vcf* form. Note that the second **DEMO** will authomatically fill in the data of this tutorial](figures/Figure2.png "Figure2")
+
+
+### Discovering over-represented motifs in the set of peak sequences
 
 1.In any [RSAT server](http://plants.rsat.eu/) server, go to the tool *peak-motifs*.
 2.Input the sequence set obtained as output in our previous step. 
@@ -147,7 +168,7 @@ For the current protocol we will be using, preferentially, the [RSAT::Plants ser
   
 9. Note that the algorithms display similar motifs, hence the next step would be to reduce motif redundancy. 
 
-####3) Motif-Clustering
+### Clustering motifs
 
 RSAT provides the tool *matrix-clustering* to reduce redundancy in a motif collection. This splecially usefull when several motif-discovery algorithms have been used on a data set, and several highly similar motifs have been found, like is the case in the current protocol.
 
