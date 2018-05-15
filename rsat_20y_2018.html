@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Alejandra Medina-Rivera, Morgane Thomas-Chollier and Jacques van Helden" />
+
+<meta name="date" content="2018-05-15" />
+
+<title>RSAT 20 years workshop: training session</title>
+
+<script src="rsat_20y_2018_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="rsat_20y_2018_files/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
+<script src="rsat_20y_2018_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="rsat_20y_2018_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="rsat_20y_2018_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="rsat_20y_2018_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="rsat_20y_2018_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="rsat_20y_2018_files/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="rsat_20y_2018_files/navigation-1.1/tabsets.js"></script>
+
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">RSAT 20 years workshop: training session</h1>
+<h3 class="subtitle"><em>Motif analysis in Plant ChIP-seq peaks</em></h3>
+<h4 class="author"><em>Alejandra Medina-Rivera, Morgane Thomas-Chollier and Jacques van Helden</em></h4>
+<h4 class="date"><em>2018-05-15</em></h4>
+
+</div>
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>In 2018, the Regulatory Sequence Analysis Tools (RSAT) software suite celebrates its <span class="math inline">\(20^{th}\)</span> birthday by organising a 1-day workshop in Paris (May 17-18, 2018).</p>
+<p>This page contains a 3-hours tutorial to get familiar with RSAT based on a study case where we analyse motifs in plant ChIP-seq peaks. This tutorial is derived from a previously published protocol <span class="citation">(Castro-Mondragon et al. <a href="#ref-pmid27557775">2016</a>)</span>. The concepts seen here apply to other organisms as well.</p>
+<div id="high-troughput-characterization-of-regulatory-regions" class="section level3">
+<h3>High-troughput characterization of regulatory regions</h3>
+<p>The ChIP-seq technology permits to determine experimentally all the DNA binding locations of a transcription factor, as well as diverse histone modifications related to epigenetic regulatioN.</p>
+<p>ChIP-seq consists in the immunoprecipitation of a protein bound to the DNA (Histone with a specific modification or a transcription factor), followed by the sequencing of the immunoprecipitated DNA fragments.</p>
+<p>The pulled down sequences are then on aligned to the genome (<em>read-mapping</em>), and the regions in reads (<em>peaks</em>) are detected with a <em>peak-calling</em> software tool. In brief, peaks are considered as regions where the protein of interest is likelt to be bound, given the local enrichment of aligned reads in ChIP-ped samples compared to a given control (so-called “<em>input</em>”).</p>
+<div class="figure">
+<img src="figures/Figure1_mapped_reads.png" title="Figure1" alt="Figure1: From Castro-Mondragon, et al 2016, genome browser screen shot of a 9 kb region in chromosome 1 of the Arabidopsis thaliana genome. The top tracks show the read coverage profile from a ChIP-seq experiment for MYB3R3 transcription factor (brown) and its control (gray). The bottom panel shows peaks obtained using different bioinformatics tools (peak-callers) with variable parammeters (see (???) for details)." />
+<p class="caption">Figure1: From Castro-Mondragon, et al 2016, genome browser screen shot of a 9 kb region in chromosome 1 of the <em>Arabidopsis thaliana</em> genome. The top tracks show the read coverage profile from a ChIP-seq experiment for MYB3R3 transcription factor (brown) and its control (gray). The bottom panel shows peaks obtained using different bioinformatics tools (peak-callers) with variable parammeters (see <span class="citation">(<span class="citeproc-not-found" data-reference-id="pmidpmid27557775"><strong>???</strong></span>)</span> for details).</p>
+</div>
+</div>
+<div id="regulatory-sequence-analysis-tools" class="section level3">
+<h3>Regulatory Sequence Analysis Tools</h3>
+<p>Since 1998, van Helden and collaborators developed a software suite combining specialised tools to analyse regulatory motifs in genomic sequences (<a href="http://www.rsat.eu/"><strong>RSAT</strong>; http://www.rsat.eu/</a>).</p>
+<p>Although initial project started with the first fully sequenced eukaryote, the bdding yease <em>Saccharomyces cerevisiae</em>, it soon incorporated other organisms, attempting to cope with the ever-increasing number of sequenced genomes.</p>
+<p>In 2015, the Web access was distributed over 6 dedicated servers in order to enable a better management of genomic data, and to rationalise the presentation of some taxon-specific tools.</p>
+<p>For the current tutorial we will be using, preferentially, the <a href="http://plants.rsat.eu/"><strong>RSAT::Plants</strong> server (http://plants.rsat.eu/)</a>, where the <em>Arabidopsis thaliana</em> genome is installed (we will use assembly TAIR10.37).</p>
+</div>
+</div>
+<div id="materials" class="section level2">
+<h2>Materials</h2>
+<div id="tools" class="section level3">
+<h3>Tools</h3>
+<ol style="list-style-type: decimal">
+<li><p><em>sequences from bedbed/gff/vcf</em>: Retrieves sequences from a genome given a set of coordinates</p></li>
+<li><p><em>peak-motifs</em>: discover exceptional motifs from a set of peak sequences, based on a combination of motif discovery algorithms relying on different criteria (enrichment, positional bias, local enrichment).</p></li>
+<li><p><em>matrix-clustering</em>: identify similarities across a collection of motifs.</p></li>
+</ol>
+</div>
+<div id="study-case" class="section level3">
+<h3>Study case</h3>
+<p>*MYB3R3 ChIP-Seq peaks were downloaded from GEO NCBI <a href="ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1482nnn/GSM1482283/suppl/GSM1482283_MYB3R3-GFP_ChIP_peaks.bed.txt.gz">ftp site</a></p>
+</div>
+</div>
+<div id="tutorial" class="section level2">
+<h2>Tutorial</h2>
+<div id="downloading-peak-coordinates" class="section level3">
+<h3>Downloading peak coordinates</h3>
+<ol style="list-style-type: decimal">
+<li><p>Create a temporary folder on your computer to store the data and results of this tutorial.</p></li>
+<li><p>Download the <a href="ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1482nnn/GSM1482283/suppl/GSM1482283_MYB3R3-GFP_ChIP_peaks.bed.txt.gz">peak coordinates</a> in this folder.</p></li>
+<li><p>Open the (uncompressed) bed file with a spreadsheet like Excel or Office calc and check its content. Information about the bed format can be found on the <a href="https://genome.ucsc.edu/FAQ/FAQformat.html#format1">UCSC Genome Browser</a>.</p></li>
+</ol>
+</div>
+<div id="retrieving-chip-seq-peaks-sequences-from-the-tair10.37-genome" class="section level3">
+<h3>Retrieving ChIP-seq peaks sequences from the TAIR10.37 genome</h3>
+<ol style="list-style-type: decimal">
+<li><p>Open in a separate window a connection to the the <a href="http://plants.rsat.eu/">RSAT::Plants server</a> server.</p></li>
+<li><p>In the left-sided menu, find the tool named <em>sequences from bed/gff/vcf</em> (you can either click on <strong>view all tools</strong>, or use the search box at the top of the tool pane.</p></li>
+<li><p>Start typing the name of the organism of interest, in this case <em>Arabidopsis</em>. While you do this, the Web form will provide the possible completions for the organism name. Select <em>Arabidopsis thaliana.TAIR10.37</em>.</p></li>
+<li><p>To specify the <strong>genomic coordinates</strong> you can either <strong>upload</strong> a file from your computer (e.g. the file that you downloaded in the previous section), or directly paste the link (e.g. ftp site above) in the <strong>URL</strong> textbox.</p></li>
+<li><p>Optionally, you can select email output in order to be notified of the query submission and completion (you shoud thus receive 2 separate emails for aach query).</p></li>
+<li><p>After a few seconds, the server displays a link to the output file, which contains the fasta-formatted sequences of the peaks. You can either download the fasta sequences to your computer, or save the URL, that will be used for following steps<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>.</p></li>
+</ol>
+<div class="figure">
+<img src="figures/Figure2.png" title="Figure2" alt="Figure2: Screenshot of the sequences from bed/gff/vcf form. Note that the second DEMO will authomatically fill in the data of this tutorial" />
+<p class="caption">Figure2: Screenshot of the <em>sequences from bed/gff/vcf</em> form. Note that the second <strong>DEMO</strong> will authomatically fill in the data of this tutorial</p>
+</div>
+</div>
+<div id="discovering-over-represented-motifs-in-the-set-of-peak-sequences" class="section level3">
+<h3>Discovering over-represented motifs in the set of peak sequences</h3>
+<p>1.In any <a href="http://plants.rsat.eu/">RSAT server</a> server, find the tool <em>peak-motifs</em>.</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Type an appropriate <strong>tittle</strong> for the analysis, for example: <em>A. Thaliana MYB3R3 vs GFP - GSM1482283</em>.</p></li>
+<li><p>For the <strong>Peak sequences</strong> option set, paste the URL of the fasta sequence file obtained in the previous section (alternatively, you can upload the fasta file from your local copy but this will take more time-.</p></li>
+<li><p>Explore the other options! We will discuss them during the training session.</p></li>
+<li><p>Specify a transcription factor database that will be used to associate the discovered motifs putative bound factors. For this dataset we will select <strong>footprintDB-plants</strong>. Note that the tool also allows you to upload a custom motif collection in Transfac format.</p></li>
+</ol>
+<p>6.Under <strong>Locate motifs and export predicted sites as custom UCSC tracks</strong>, in <strong>Visualiza peaks ans sites in genome browser</strong>, select peak coordiantes specified in fasta headers in <em>bedtools getfasta</em> format, asumming we used the <em>sequences from bed/gff/vcf</em> to retrieve the sequences.</p>
+<div class="figure">
+<img src="figures/Figure3.png" title="Figure3" alt="Figure3: Screenshot of the peak-motifs form. The user has to input the required data and information." />
+<p class="caption">Figure3: Screenshot of the <em>peak-motifs</em> form. The user has to input the required data and information.</p>
+</div>
+<p>7.A link to the results will appear. Anticipated results can be found <a href="./peak-motifs.2018-05-11.190016_2018-05-11.190016_zkwbfV/peak-motifs_synthesis.html">here</a>.</p>
+<ol start="8" style="list-style-type: decimal">
+<li><p><em>peak-motifs</em> results include:</p></li>
+<li><p><strong>Results summary</strong>: The set of discovered motifs and the full results can be downloaded.</p></li>
+<li><p><strong>Sequence composition</strong>: Shows the nucleotidic composition of the peaks. Is possible to observed the size distribution of the peaks (mean of 200bps). Two transition tables are show, one for mono-nculeotide compistion and a second one for di-nucleotide compostion.</p></li>
+<li><p><strong>Discovered motifs by algorithm</strong>: The discovered motifs are organized by algorithm, and the motif name is built with the options used to retreive the motifs (k-mer length, markov model, rank of the motif). The motif logo is shown in both orientation and a motif comparison with the selected database is shown.</p></li>
+<li><p>Note that the algorithms display similar motifs, hence the next step would be to reduce motif redundancy.</p></li>
+</ol>
+</div>
+<div id="clustering-motifs" class="section level3">
+<h3>Clustering motifs</h3>
+<p>RSAT provides the tool <em>matrix-clustering</em> to reduce redundancy in a motif collection. This splecially usefull when several motif-discovery algorithms have been used on a data set, and several highly similar motifs have been found, like is the case in the current protocol.</p>
+<ol style="list-style-type: decimal">
+<li><p>Open the tool <em>matrix-clustering</em> in the <a href="http://plants.rsat.eu">RSAT:Plant</a> server. <img src="figures/Figure4.1.png" title="Figure4.1" alt="Figure4.1: Screenshot of the matrix-clustering form. The user has to fill the mandatory sections." /></p></li>
+<li><p>On the title box give a title to the analysis.</p></li>
+<li><p>Input the motif file containing the resuleting motifs from <em>peak-motifs</em>. <img src="figures/Figure4.2.png" title="Figure4.2" alt="Figure4.2: Screenshot of the matrix-clustering form. The user has to fill the mandatory sections." /></p></li>
+<li><p>Options can be tuned to trim the tree comparing the motifs with different thresholds. For the current protocol we recomened using <strong>w</strong>=5 and <strong>Ncor</strong>=0.55.</p></li>
+<li><p>In advanced options, select <em>Ncor</em> (Normalized Pearson Correlation) and <em>average</em> <img src="figures/Figure4.3.png" title="Figure4.3" alt="Figure4.3: Screenshot of the matrix-clustering form. The user has to fill the mandatory sections." /></p></li>
+<li><p>Select one output option. Since the program could take some time depending on the size of the collection we recomend using <strong>email</strong>.</p></li>
+</ol>
+<div class="figure">
+<img src="figures/Figure4.4.png" title="Figure4.4" alt="Figure4.4: Screenshot of the matrix-clustering form. The user has to fill the mandatory sections." />
+<p class="caption">Figure4.4: Screenshot of the <em>matrix-clustering</em> form. The user has to fill the mandatory sections.</p>
+</div>
+<ol start="7" style="list-style-type: decimal">
+<li><p>A results summary show a table with the number of input motifs together with the used parameters and a link to download the results.</p></li>
+<li><p>The <strong>Logo forest</strong> shows a tree conecting the motifs by similarity. There are tow visualization formats, a dynamic browsable one and a low aulaity image allows for a quick overview.</p></li>
+<li><p>The <strong>Individual motifs view</strong> shows a table with the input motifs a general information on the,</p></li>
+<li></li>
+<li></li>
+</ol>
+</div>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2>References</h2>
+<div id="refs" class="references">
+<div id="ref-pmid27557775">
+<p>Castro-Mondragon, J. A., C. Rioualen, B. Contreras-Moreira, and J. van Helden. 2016. “RSAT::Plants: Motif Discovery in ChIP-Seq Peaks of Plant Genomes.” <em>Methods Mol. Biol.</em> 1482: 297–322.</p>
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>The second option is particularly interesting if you have a slow internet connection, since this avoids to download the sequences and upload them for further analysis<a href="#fnref1">↩</a></p></li>
+</ol>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
