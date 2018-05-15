@@ -1,3 +1,7 @@
+#RSAT 20 years workshop: training session"
+##"Motif analysis in Plant ChIP-seq peaks"
+Authors: "Alejandra Medina-Rivera, Morgane Thomas-Chollier and Jacques van Helden"
+<!-- 
 ---
 title: "RSAT 20 years workshop: training session"
 subtitle: "Motif analysis in Plant ChIP-seq peaks"
@@ -72,7 +76,7 @@ knitr::opts_chunk$set(
 # knitr::asis_output("\\footnotesize")
 
 ```
-
+--> 
 
 ## Introduction
 
@@ -200,11 +204,13 @@ RSAT provides the tool *matrix-clustering* to reduce redundancy in a motif colle
 
 9. The **Individual motifs view** shows a table with the input motifs a general information on the,
 
-10. 
+10. The **Individual cluster view** shows general information regarding each cluster.
 
-9. 
+11. The **Heatmap view** sumairzed the result of motif similarities in a heatmap of the clusters.
+
+12. To obtain the reduced motif set click on the link under dowload root motifs in the summary section.
 
 
 ## References
 
-
+1. Castro-Mondragon, J.A. et al. (2016). Methods Mol Biol., 1482, 297–322
